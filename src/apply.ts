@@ -17,6 +17,8 @@ export const apply = async (url: string, options?: RouterInit) => {
   lastRequestUID = requestUID
   storeScrollPosition(options)
 
+  w.document.body.classList.add('gosen-loading')
+
   const urlWithoutHash = url.split('#')[0]
 
   const { commands, version } = await request(urlWithoutHash, {
@@ -28,6 +30,7 @@ export const apply = async (url: string, options?: RouterInit) => {
     return false
   }
 
+  w.document.body.classList.remove('gosen-loading')
   w[versionKey] = version
   const commandDiff = diff(w[stateKey] || [], commands)
 

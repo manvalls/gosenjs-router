@@ -1,6 +1,6 @@
 import { push } from './router'
 
-export const handleLinkClicks = (e: EventTarget) => {
+export const handleLinkClick = (e: EventTarget) => {
   const onClick = (event: MouseEvent) => {
     let target = event.target as Element
     while (target && target.tagName !== 'A') {
@@ -38,7 +38,10 @@ export const handleLinkClicks = (e: EventTarget) => {
     }
 
     event.preventDefault()
-    push(href, { window: target.ownerDocument.defaultView })
+    target.classList.add('gosen-loading')
+    push(href, { window: target.ownerDocument.defaultView }).finally(() => {
+      target.classList.remove('gosen-loading')
+    })
   }
 
   e.addEventListener('click', onClick)

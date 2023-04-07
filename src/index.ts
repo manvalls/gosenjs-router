@@ -2,4 +2,5 @@ export * from './types';
 export * from './router';
 
 export * from './handlePopState';
-export * from './handleLinkClicks';
+export * from './handleLinkClick';
+export * from './handleFormSubmit';
