@@ -77,10 +77,11 @@ const scrollToURL = (url: string, options?: RouterOptions) => {
   el.scrollIntoView()
 }
 
-const applyOrScroll = async (url: string, options?: RouterOptions) => {
-  if (lastAppliedURL.split('#')[0] === url.split('#')[0]) {
+const applyOrScroll = async (url: string, options?: RouterInit) => {
+  const method = options?.method || 'GET'
+  if (method.toLowerCase() === 'get' && lastAppliedURL.split('#')[0] === url.split('#')[0]) {
     scrollToURL(url, options)
-    return false
+    return true
   }
 
   return await apply(url, options)
