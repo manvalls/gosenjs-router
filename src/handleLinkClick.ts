@@ -2,6 +2,10 @@ import { push } from './router'
 
 export const handleLinkClick = (e: EventTarget) => {
   const onClick = (event: MouseEvent) => {
+    if (event.defaultPrevented) {
+      return
+    }
+
     let target = event.target as Element
     while (target && target.tagName !== 'A') {
       target = target.parentNode as Element

@@ -2,6 +2,10 @@ import { push } from './router'
 
 export const handleFormSubmit = (e: EventTarget) => {
   const onSubmit = (event: Event) => {
+    if (event.defaultPrevented) {
+      return
+    }
+
     const target = event.target as HTMLFormElement
     if (!target || target.tagName !== 'FORM') {
       return
