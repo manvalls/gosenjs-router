@@ -6,20 +6,24 @@ export const handleLinkClick = (e: EventTarget) => {
       return
     }
 
-    let target = event.target as Element
+    let target = event.target as HTMLAnchorElement
     while (target && target.tagName !== 'A') {
-      target = target.parentNode as Element
+      target = target.parentNode as HTMLAnchorElement
     }
 
     if (!target || target.tagName !== 'A') {
       return
     }
 
-    if (target.hasAttribute('download') || target.getAttribute('rel') === 'external') {
+    if (target.target && target.target !== '_self') {
       return
     }
 
-    let parent = target
+    if (target.hasAttribute('download') || target.rel === 'external') {
+      return
+    }
+
+    let parent: Element = target
     while (parent && parent instanceof Element) {
       if (parent.hasAttribute('data-disable-gosen-router') || parent.hasAttribute('disable-gosen-router')) {
         return
@@ -28,16 +32,8 @@ export const handleLinkClick = (e: EventTarget) => {
       parent = parent.parentNode as Element
     }
 
-    const href = target.getAttribute('href')
-    if (!href) {
-      return
-    }
-
-    if (href.startsWith('mailto:') || href.startsWith('tel:')) {
-      return
-    }
-
-    if (href.startsWith('http') && !href.startsWith(window.location.origin)) {
+    const href = target.href
+    if (!href || !href.startsWith(target.ownerDocument.defaultView.location.origin)) {
       return
     }
 
