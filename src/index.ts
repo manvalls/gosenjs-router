@@ -1,6 +1,7 @@
 import request from '@gosen/request'
 import diff from '@gosen/diff'
 import { execute } from '@gosen/dom'
+import { Command } from '@gosen/command-types'
 
 const versionKey = '__GOSEN_PAGE_VERSION__'
 const stateKey = '__GOSEN_PAGE_STATE__'
@@ -43,10 +44,12 @@ const apply = async (url: string, options?: RouterInit) => {
   w[versionKey] = version
   const commandDiff = diff(w[stateKey] || [], commands)
 
-  w[stateKey] = commands.map((command) => {
+  w[stateKey] = commands.map((command: Command): Command => {
     if ('tx' in command) {
-      const { tx, ...rest } = command
-      return rest
+      return {
+        ...command,
+        tx: undefined,
+      }
     }
 
     return command
