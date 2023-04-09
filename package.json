@@ -27,6 +27,6 @@
     "@gosen/command-types": "^0.0.3",
     "@gosen/diff": "^0.0.2",
     "@gosen/dom": "^0.0.2",
-    "@gosen/request": "^0.0.1"
+    "@gosen/request": "^0.0.2"
   }
 }
