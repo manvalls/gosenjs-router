@@ -24,9 +24,9 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
-    "@gosen/command-types": "^0.0.7",
-    "@gosen/diff": "^0.0.6",
-    "@gosen/dom": "^0.0.5",
-    "@gosen/request": "^0.0.6"
+    "@gosen/command-types": "^0.0.8",
+    "@gosen/diff": "^0.0.8",
+    "@gosen/dom": "^0.0.8",
+    "@gosen/request": "^0.0.8"
   }
 }
