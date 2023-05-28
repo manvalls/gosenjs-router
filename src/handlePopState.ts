@@ -8,11 +8,12 @@ export const handlePopState = (options?: RouterOptions) => {
   w[lastAppliedURL] = w.location.href
 
   const onPopState = async () => {
-    const applied = await applyOrScroll(w.location.href, options)
+    const { applied, url: finalURL } = await applyOrScroll(w.location.href, options)
 
     if (applied) {
       updateEntryUID(options)
       restoreScroll(options)
+      w.history.replaceState(history.state, '', finalURL)
     }
   }
 

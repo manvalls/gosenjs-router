@@ -10,7 +10,7 @@ export const getVersion = (options?: RouterOptions) => {
 }
 
 export const push = async (url: string, options?: RouterInit) => {
-  const applied = await applyOrScroll(url, options)
+  const { applied, url: finalURL } = await applyOrScroll(url, options)
   if (!applied) {
     return
   }
@@ -19,21 +19,20 @@ export const push = async (url: string, options?: RouterInit) => {
 
   scrollToURL(url, options)
   w[entryUID] = getUID()
-  w.history.pushState({ __entryUID: w[entryUID] }, '', url)
+  w.history.pushState({ __entryUID: w[entryUID] }, '', finalURL)
 }
 
 export const replace = async (url: string, options?: RouterInit) => {
-  const applied = await apply(url, options)
+  const { applied, url: finalURL } = await apply(url, options)
   if (!applied) {
     return
   }
 
   const w = options?.window || window
-  w.history.replaceState(history.state, '', url)
+  w.history.replaceState(history.state, '', finalURL)
 }
 
 export const reload = async (options?: RouterOptions) => {
   const w = options?.window || window
-  const url = w.location.href
-  await apply(url, options)
+  await replace(w.location.href, options)
 }

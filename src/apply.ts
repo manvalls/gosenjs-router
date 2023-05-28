@@ -21,13 +21,16 @@ export const apply = async (url: string, options?: RouterInit) => {
 
   const urlWithoutHash = url.split('#')[0]
 
-  const { commands, version } = await request(urlWithoutHash, {
+  const { commands, version, url: finalURL } = await request(urlWithoutHash, {
     ...init,
     version: getVersion(options),
   })
 
   if (lastRequestUID !== requestUID) {
-    return false
+    return {
+      applied: false,
+      url: finalURL,
+    }
   }
 
   w.document.body.classList.remove('gosen-loading')
@@ -45,7 +48,10 @@ export const apply = async (url: string, options?: RouterInit) => {
     return command
   })
 
-  w[lastAppliedURL] = url
+  w[lastAppliedURL] = finalURL
   await execute(w.document, commandDiff)
-  return true
+  return {
+    applied: true,
+    url: finalURL,
+  }
 }

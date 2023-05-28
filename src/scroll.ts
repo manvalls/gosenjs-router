@@ -56,7 +56,7 @@ export const applyOrScroll = async (url: string, options?: RouterInit) => {
   const method = options?.method || 'GET'
   if (method.toLowerCase() === 'get' && (w[lastAppliedURL] || '').split('#')[0] === url.split('#')[0]) {
     scrollToURL(url, options)
-    return true
+    return { applied: false, url }
   }
 
   return await apply(url, options)
